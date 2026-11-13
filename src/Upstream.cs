@@ -283,6 +283,16 @@ namespace GBCompat
             return player != null && player.controller != null && player.controller.actionBuild != null;
         }
 
+        /// <summary>GenesisBook's PostAddDataAction rebuilds the starmap instancing manager while the main menu demo may already run;
+        /// the old one is freed, but the demo's SectorModel keeps it, so the next Dark Fog unit built there throws in
+        /// RegisterModelIndex. Hand the new manager to the running sector; its renderers are created on demand.</summary>
+        [HarmonyPatch(typeof(GameMain), "CreateStarmapGPUInstancing"), HarmonyPostfix]
+        static void GameMain_CreateStarmapGPUInstancing_Postfix()
+        {
+            SectorModel model = GameMain.data?.spaceSector?.model;
+            if (model != null && model.starmapgpuiManager != null) model.starmapgpuiManager = GameMain.starmapgpuiManager;
+        }
+
         const int DarkFogGravitonLensItem = 1211, DarkFogGravitonLensRecipe = 162, AccumulatorFull = 2207;
 
         [HarmonyPatch(typeof(global::ProjectGenesis.Utils.JsonDataUtils), nameof(global::ProjectGenesis.Utils.JsonDataUtils.ImportJson)), HarmonyPostfix]

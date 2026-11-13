@@ -21,6 +21,7 @@ Game version 0.10.35 changed several game methods that GenesisBook 3.2.3 patches
 - **Settings:** "Revert all" in the settings window (new in 0.10.35) also resets GenesisBook's settings.
 - **Item grid:** the dark fog graviton lens (new in 0.10.35) moves below the other dark fog items instead of sitting among GenesisBook's items, and the full accumulator moves one slot along, as in ProjectGenesis 3.2.4.
 - **Switching games:** no error when starting or loading a game while another is open (the camera drew one more frame after the player was removed).
+- **Main menu:** no error after the main menu has been open for a while. GenesisBook rebuilds the star map's model renderer while the menu's background scene already runs, and the Dark Fog there kept using the old one.
 
 ## Compatibility
 

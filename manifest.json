@@ -1,6 +1,6 @@
 {
     "name": "BUG_GBCompat",
-    "version_number": "1.0.0",
+    "version_number": "1.0.1",
     "website_url": "https://github.com/darkenb/GBCompat",
     "description": "Makes GenesisBook 3.2.3 work on game version 0.10.35, applied at runtime. Derived from ProjectGenesis (GPL-3.0); not made or endorsed by its authors.",
     "dependencies": [
