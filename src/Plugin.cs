@@ -20,7 +20,7 @@ namespace GBCompat
     [BepInPlugin(Guid, "BUG_GBCompat", Version)]
     public class Plugin : BaseUnityPlugin
     {
-        public const string Guid = "aaa.bug.dsp.gbcompat", Version = "1.0.1";
+        public const string Guid = "aaa.bug.dsp.gbcompat", Version = "1.0.2";
         internal static ManualLogSource Log;
 
         void Awake()

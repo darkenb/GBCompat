@@ -274,6 +274,17 @@ namespace GBCompat
         static IEnumerable<CodeInstruction> UILootFilter_OnUpdate_currentTypeField_Transpiler(IEnumerable<CodeInstruction> instructions) =>
             Upstream.UILootFilterPatches.CurrentType(instructions);
 
+        /// <summary>With 17 columns the mouse test can point past the filter's 130 slots (vanilla only drops an index whose slot
+        /// is empty), and _OnUpdate then reads protoArray out of range. Treat such a point as no slot.</summary>
+        [HarmonyPatch(typeof(UILootFilter), "TestMouseIndex"), HarmonyPostfix]
+        static void UILootFilter_TestMouseIndex_Postfix(ref int ___hoveredIndex, ItemProto[] ___protoArray, UnityEngine.UI.Image ___selImage)
+        {
+            if (___protoArray == null || ___hoveredIndex < ___protoArray.Length) return;
+            ___hoveredIndex = -1;
+            ___selImage.rectTransform.anchoredPosition = new Vector2(-1f, 1f);
+            ___selImage.gameObject.SetActive(false);
+        }
+
         /// <summary>0.10.35: when switching games, GameData.Destroy() clears mainPlayer but the camera still renders one more
         /// frame, so vanilla OnCameraPostRender throws a NullReferenceException. Skip that frame.</summary>
         [HarmonyPatch(typeof(SectorModel), nameof(SectorModel.OnCameraPostRender)), HarmonyPrefix]
